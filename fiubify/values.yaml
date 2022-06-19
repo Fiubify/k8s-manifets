@@ -1,7 +1,15 @@
+internalServices:
+  - serviceName: &metricsName "metrics"
+    port: &metricsPort 5000
+  - serviceName: &usersName "users"
+    port: &usersPort 5000
+  - serviceName: &contentsName "contents"
+    port: &contentsPort 5000
+
 servicesToDeploy:
   - deployName: "metrics"
     replicasCount: 1
-    serviceLabelName: "metrics"
+    serviceLabelName: *metricsName
     containerName: "fiubify-metrics"
     imageName: "taller2fiubify/fiubify-metrics"
     imageVersion: "latest"
@@ -11,11 +19,11 @@ servicesToDeploy:
       - name: "MONGODB_URI"
         value: "mongodb+srv://admin:123@fiubify-users.aybd8.mongodb.net/metrics-staging?retryWrites=true&w=majority"
       - name: "PORT"
-        value: 5000
+        value: *metricsPort
         number: "true"
   - deployName: "users"
     replicasCount: 1
-    serviceLabelName: "users"
+    serviceLabelName: *usersName
     containerName: "fiubify-users"
     imageName: "taller2fiubify/fiubify-users"
     imageVersion: "latest"
@@ -25,11 +33,11 @@ servicesToDeploy:
       - name: "MONGODB_URI"
         value: "mongodb+srv://admin:123@fiubify-users.aybd8.mongodb.net/users-staging?retryWrites=true&w=majority"
       - name: "PORT"
-        value: 5000
+        value: *usersPort
         number: "true"
   - deployName: "contents"
     replicasCount: 1
-    serviceLabelName: "contents"
+    serviceLabelName: *contentsName
     containerName: "fiubify-contents"
     imageName: "taller2fiubify/fiubify-contents"
     imageVersion: "latest"
@@ -39,7 +47,7 @@ servicesToDeploy:
       - name: "MONGODB_URI"
         value: "mongodb+srv://admin:123@fiubify-users.aybd8.mongodb.net/contents-staging?retryWrites=true&w=majority"
       - name: "PORT"
-        value: 5000
+        value: *contentsPort
         number: "true"
       - name: "UID_AUTH_URL"
         value: "https://fiubify-users-staging.herokuapp.com/validate/uid"
