@@ -55,9 +55,9 @@ servicesToDeploy:
         value: *contentsPort
         number: "true"
       - name: "UID_AUTH_URL"
-        value: "https://fiubify-users-staging.herokuapp.com/validate/uid"
+        value: "https://service-users/validate/uid"
       - name: "USER_AUTH_URL"
-        value: "https://fiubify-users-staging.herokuapp.com/validate/user"
+        value: "https://service-users/validate/user"
   - deployName: "middleware"
     replicasCount: 1
     serviceLabelName: *middlewareName
@@ -71,13 +71,13 @@ servicesToDeploy:
         value: *middlewarePort
         number: "true"
       - name: "USERS_SERVICE_URL"
-        value: ""
+        value: "https://service-users"
       - name: "AUTH_SERVICE_URL"
-        value: ""
+        value: "https://service-users"
       - name: "CONTENTS_SERVICE_URL"
-        value: ""
+        value: "https://service-contents"
       - name: "METRICS_SERVICE_URL"
-        value: ""
+        value: "https://service-metrics"
 
 service:
   type: ClusterIP
