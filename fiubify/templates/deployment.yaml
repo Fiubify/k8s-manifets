@@ -1,0 +1,25 @@
+{{- range .Values.servicesToDeploy}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .deployName  }}
+spec:
+  replicas: {{ .replicasCount }}
+  selector:
+    matchLabels:
+      service: {{ .serviceLabelName }}
+  template:
+    metadata:
+      labels:
+        service: {{ .serviceLabelName }}
+    spec:
+      containers:
+        - name: {{ .containerName }}
+          image: "{{ .imageName }}:{{ .imageVersion}}"
+          env:
+          {{- range .environmentVariables}}
+            - name:  {{ .name }}
+              value: {{ .value }}
+          {{- end }}
+{{- end}}

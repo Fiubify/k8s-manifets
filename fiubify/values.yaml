@@ -1,0 +1,19 @@
+servicesToDeploy:
+  - deployName: "metrics"
+    replicasCount: 1
+    serviceLabelName: "metrics"
+    containerName: "fiubify-metrics"
+    imageName: "taller2fiubify/fiubify-metrics"
+    imageVersion: "latest"
+    environmentVariables:
+      - name: "NODE_ENV"
+        value: "STAGING"
+      - name: "MONGODB_URI"
+        value: "mongodb+srv://admin:123@fiubify-users.aybd8.mongodb.net/metrics-staging?retryWrites=true&w=majority"
+      - name: "PORT"
+        value: 5000
+
+service:
+  type: ClusterIP
+  port: 80
+
