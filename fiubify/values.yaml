@@ -6,6 +6,11 @@ internalServices:
   - serviceName: &contentsName "contents"
     port: &contentsPort 5000
 
+externalServices:
+  serviceName: &middlewareName "middleware"
+  port: &middlewarePort 5000
+
+
 servicesToDeploy:
   - deployName: "metrics"
     replicasCount: 1
@@ -55,7 +60,7 @@ servicesToDeploy:
         value: "https://fiubify-users-staging.herokuapp.com/validate/user"
   - deployName: "middleware"
     replicasCount: 1
-    serviceLabelName: "middleware"
+    serviceLabelName: *middlewareName
     containerName: "fiubify-middleware"
     imageName: "taller2fiubify/fiubify-middleware"
     imageVersion: "latest"
@@ -63,7 +68,7 @@ servicesToDeploy:
       - name: "NODE_ENV"
         value: "STAGING"
       - name: "PORT"
-        value: 5000
+        value: *middlewarePort
         number: "true"
       - name: "USERS_SERVICE_URL"
         value: ""
