@@ -16,10 +16,10 @@ spec:
     spec:
       containers:
         - name: {{ .containerName }}
-          image: "{{ .imageName }}:{{ .imageVersion}}"
+          image: {{ .imageName }}:{{ .imageVersion}}
           env:
           {{- range .environmentVariables}}
             - name:  {{ .name }}
-              value: {{ .value }}
+              value: "{{ .value }}"
           {{- end }}
 {{- end}}

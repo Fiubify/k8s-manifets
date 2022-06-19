@@ -12,6 +12,59 @@ servicesToDeploy:
         value: "mongodb+srv://admin:123@fiubify-users.aybd8.mongodb.net/metrics-staging?retryWrites=true&w=majority"
       - name: "PORT"
         value: 5000
+        number: "true"
+  - deployName: "users"
+    replicasCount: 1
+    serviceLabelName: "users"
+    containerName: "fiubify-users"
+    imageName: "taller2fiubify/fiubify-users"
+    imageVersion: "latest"
+    environmentVariables:
+      - name: "NODE_ENV"
+        value: "STAGING"
+      - name: "MONGODB_URI"
+        value: "mongodb+srv://admin:123@fiubify-users.aybd8.mongodb.net/users-staging?retryWrites=true&w=majority"
+      - name: "PORT"
+        value: 5000
+        number: "true"
+  - deployName: "contents"
+    replicasCount: 1
+    serviceLabelName: "contents"
+    containerName: "fiubify-contents"
+    imageName: "taller2fiubify/fiubify-contents"
+    imageVersion: "latest"
+    environmentVariables:
+      - name: "NODE_ENV"
+        value: "STAGING"
+      - name: "MONGODB_URI"
+        value: "mongodb+srv://admin:123@fiubify-users.aybd8.mongodb.net/contents-staging?retryWrites=true&w=majority"
+      - name: "PORT"
+        value: 5000
+        number: "true"
+      - name: "UID_AUTH_URL"
+        value: "https://fiubify-users-staging.herokuapp.com/validate/uid"
+      - name: "USER_AUTH_URL"
+        value: "https://fiubify-users-staging.herokuapp.com/validate/user"
+  - deployName: "middleware"
+    replicasCount: 1
+    serviceLabelName: "middleware"
+    containerName: "fiubify-middleware"
+    imageName: "taller2fiubify/fiubify-middleware"
+    imageVersion: "latest"
+    environmentVariables:
+      - name: "NODE_ENV"
+        value: "STAGING"
+      - name: "PORT"
+        value: 5000
+        number: "true"
+      - name: "USERS_SERVICE_URL"
+        value: ""
+      - name: "AUTH_SERVICE_URL"
+        value: ""
+      - name: "CONTENTS_SERVICE_URL"
+        value: ""
+      - name: "METRICS_SERVICE_URL"
+        value: ""
 
 service:
   type: ClusterIP
