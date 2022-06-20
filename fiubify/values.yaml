@@ -71,13 +71,13 @@ servicesToDeploy:
         value: *middlewarePort
         number: "true"
       - name: "USERS_SERVICE_URL"
-        value: "https://service-users"
+        value: "http://service-users:5000"
       - name: "AUTH_SERVICE_URL"
-        value: "https://service-users"
+        value: "http://service-users:5000"
       - name: "CONTENTS_SERVICE_URL"
-        value: "https://service-contents"
+        value: "http://service-contents:5000"
       - name: "METRICS_SERVICE_URL"
-        value: "https://service-metrics"
+        value: "http://service-metrics:5000"
 
 service:
   type: ClusterIP
