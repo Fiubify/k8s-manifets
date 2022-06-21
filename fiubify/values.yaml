@@ -55,9 +55,9 @@ servicesToDeploy:
         value: *contentsPort
         number: "true"
       - name: "UID_AUTH_URL"
-        value: "https://service-users/validate/uid"
+        value: "https://service-users/auth/validate/uid"
       - name: "USER_AUTH_URL"
-        value: "https://service-users/validate/user"
+        value: "https://service-users/auth/validate/user"
   - deployName: "middleware"
     replicasCount: 1
     serviceLabelName: *middlewareName
