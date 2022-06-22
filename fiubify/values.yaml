@@ -1,0 +1,85 @@
+internalServices:
+  - serviceName: &metricsName "metrics"
+    port: &metricsPort 5000
+  - serviceName: &usersName "users"
+    port: &usersPort 5000
+  - serviceName: &contentsName "contents"
+    port: &contentsPort 5000
+
+externalServices:
+  serviceName: &middlewareName "middleware"
+  port: &middlewarePort 5000
+
+
+servicesToDeploy:
+  - deployName: "metrics"
+    replicasCount: 1
+    serviceLabelName: *metricsName
+    containerName: "fiubify-metrics"
+    imageName: "taller2fiubify/fiubify-metrics"
+    imageVersion: "latest"
+    environmentVariables:
+      - name: "NODE_ENV"
+        value: "STAGING"
+      - name: "MONGODB_URI"
+        value: "mongodb+srv://admin:123@fiubify-users.aybd8.mongodb.net/metrics-staging?retryWrites=true&w=majority"
+      - name: "PORT"
+        value: *metricsPort
+        number: "true"
+  - deployName: "users"
+    replicasCount: 1
+    serviceLabelName: *usersName
+    containerName: "fiubify-users"
+    imageName: "taller2fiubify/fiubify-users"
+    imageVersion: "latest"
+    environmentVariables:
+      - name: "NODE_ENV"
+        value: "STAGING"
+      - name: "MONGODB_URI"
+        value: "mongodb+srv://admin:123@fiubify-users.aybd8.mongodb.net/users-staging?retryWrites=true&w=majority"
+      - name: "PORT"
+        value: *usersPort
+        number: "true"
+  - deployName: "contents"
+    replicasCount: 1
+    serviceLabelName: *contentsName
+    containerName: "fiubify-contents"
+    imageName: "taller2fiubify/fiubify-contents"
+    imageVersion: "latest"
+    environmentVariables:
+      - name: "NODE_ENV"
+        value: "STAGING"
+      - name: "MONGODB_URI"
+        value: "mongodb+srv://admin:123@fiubify-users.aybd8.mongodb.net/contents-staging?retryWrites=true&w=majority"
+      - name: "PORT"
+        value: *contentsPort
+        number: "true"
+      - name: "UID_AUTH_URL"
+        value: "https://service-users/auth/validate/uid"
+      - name: "USER_AUTH_URL"
+        value: "https://service-users/auth/validate/user"
+  - deployName: "middleware"
+    replicasCount: 1
+    serviceLabelName: *middlewareName
+    containerName: "fiubify-middleware"
+    imageName: "taller2fiubify/fiubify-middleware"
+    imageVersion: "latest"
+    environmentVariables:
+      - name: "NODE_ENV"
+        value: "STAGING"
+      - name: "PORT"
+        value: *middlewarePort
+        number: "true"
+      - name: "USERS_SERVICE_URL"
+        value: "http://service-users:5000"
+      - name: "AUTH_SERVICE_URL"
+        value: "http://service-users:5000"
+      - name: "CONTENTS_SERVICE_URL"
+        value: "http://service-contents:5000"
+      - name: "METRICS_SERVICE_URL"
+        value: "http://service-metrics:5000"
+
+service:
+  type: ClusterIP
+  port: 80
+

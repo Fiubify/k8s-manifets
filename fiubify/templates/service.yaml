@@ -1,0 +1,30 @@
+{{- range .Values.internalServices}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-{{ .serviceName}}
+spec:
+  ports:
+    - port: {{ .port}}
+      protocol: TCP
+      targetPort: {{ .port}}
+  selector:
+    service: {{ .serviceName }}
+
+{{- end}}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-external-{{ .Values.externalServices.serviceName }}
+spec:
+  type: LoadBalancer
+  ports:
+    - port: {{ .Values.externalServices.port }}
+      targetPort: {{ .Values.externalServices.port }}
+      protocol: TCP
+      nodePort: {{ .Values.externalServices.nodePort }}
+  selector:
+    service: {{ .Values.externalServices.serviceName }}
