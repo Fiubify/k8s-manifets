@@ -5,6 +5,8 @@ internalServices:
     port: &usersPort 5000
   - serviceName: &contentsName "contents"
     port: &contentsPort 5000
+  - serviceName: &paymentsName "payments"
+    port: &paymentsPort 5000
 
 externalServices:
   serviceName: &middlewareName "middleware"
@@ -78,6 +80,16 @@ servicesToDeploy:
         value: "http://service-contents:5000"
       - name: "METRICS_SERVICE_URL"
         value: "http://service-metrics:5000"
+  - deployName: "payments"
+    replicasCount: 1
+    serviceLabelName: *paymentsName
+    containerName: "fiubify-payments"
+    imageName: "taller2fiubify/fiubify-payments"
+    imageVersion: "latest"
+    environmentVariables:
+      - name: "PORT"
+        value: *paymentsPort
+        number: "true"
 
 service:
   type: ClusterIP
