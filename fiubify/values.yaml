@@ -80,6 +80,9 @@ servicesToDeploy:
         value: "http://service-contents:5000"
       - name: "METRICS_SERVICE_URL"
         value: "http://service-metrics:5000"
+      - name: "PAYMENTS_SERVICE_URL"
+        value: "http://service-payments:5000"
+
   - deployName: "payments"
     replicasCount: 1
     serviceLabelName: *paymentsName
